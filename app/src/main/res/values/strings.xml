@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">Siskopsya</string>
+    <string name="error_string">Kolom tidak boleh kosong</string>
+</resources>
