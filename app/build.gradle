@@ -48,5 +48,7 @@ dependencies {
     implementation 'de.hdodenhof:circleimageview:2.1.0'
     //custom spinner
     //implementation'com.github.devdhar04:MaterialSpinner:v0.1.2'
+    //chart
+    //implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
 
 }
