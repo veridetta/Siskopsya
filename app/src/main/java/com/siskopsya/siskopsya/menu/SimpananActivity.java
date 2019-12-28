@@ -51,6 +51,7 @@ public class SimpananActivity extends AppCompatActivity {
         setContentView(R.layout.activity_simpanan);
         sharedpreferences = getSharedPreferences("siskopsya", Context.MODE_PRIVATE);
         no_anggota = sharedpreferences.getString("no_anggota", null);
+        lyNoData= findViewById(R.id.ly_no_data);
         lyData = findViewById(R.id.ly_deskripsi);
         noAnggota = findViewById(R.id.no_anggota);
         namaAnggota = findViewById(R.id.nama_anggota);
@@ -75,18 +76,17 @@ public class SimpananActivity extends AppCompatActivity {
         return true;
     }
     private void getSaldoList(){
-        String urll ="https://yayasansehatmadanielarbah.com/api-siskopsya/saldo/simpanan.php?auth=c2lza29wc3lhOnNpc2tvcHN5YTEyMw==&&no_anggota="+no_anggota;
+        final String urll ="https://yayasansehatmadanielarbah.com/api-siskopsya/saldo/simpanan.php?auth=c2lza29wc3lhOnNpc2tvcHN5YTEyMw==&&no_anggota="+no_anggota;
         RequestQueue requestQueue= Volley.newRequestQueue(this);
         Log.wtf("URL Called", urll + "");
         StringRequest stringRequest=new StringRequest(Request.Method.GET,
                 urll, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                Log.e(MainActivity.class.getSimpleName(), "Auth Response: " + response);
+                Log.e(SimpananActivity.class.getSimpleName(), "Auth Response: " +urll+ response);
                 try{
                     JSONObject jsonObject=new JSONObject(response);
                     JSONArray jArray = jsonObject.getJSONArray("content");
-                    JSONArray jTotal = jsonObject.getJSONArray("total");
                     if(jsonObject.getString("data").equals("no data")){
                         lyNoData.setVisibility(View.VISIBLE);
                         lyData.setVisibility(View.GONE);
@@ -99,15 +99,11 @@ public class SimpananActivity extends AppCompatActivity {
                             tNoAnggota =jsonObject1.getString("no_anggota");
                             tNamaAnggota =jsonObject1.getString("nama_anggota");
                             tTgLGabung= jsonObject1.getString("tgl_gabung");
-                            tTotalSaldo = jsonObject1.getString("total_saldo");
                             tSimpananPokok = jsonObject1.getString("simpanan_pokok");
                             tSimpananWajib= jsonObject1.getString("simpanan_wajib");
                             tSimpananSukarela= jsonObject1.getString("simpanan_sukarela");
                         }
-                        for(int m=0;m<jTotal.length();m++) {
-                            JSONObject getTotal = jTotal.getJSONObject(m);
-                            //txtTotalD = getTotal.getString("total_diagnosa");
-                        }
+                        tTotalSaldo = jsonObject.getString("total_saldo");
                         lyNoData.setVisibility(View.GONE);
                         lyData.setVisibility(View.VISIBLE);
                         //totalD.setText(txtTotalD);
