@@ -231,7 +231,7 @@
                             android:layout_height="wrap_content"
                             android:textSize="@dimen/_13sdp"
                             android:textStyle="bold"
-                            android:text="Rincian Tagihan"/>
+                            android:text="Rincian Tabungan"/>
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"

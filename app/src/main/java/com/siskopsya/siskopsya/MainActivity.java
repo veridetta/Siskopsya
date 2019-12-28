@@ -49,16 +49,17 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        sharedpreferences = getSharedPreferences("siskopsya", Context.MODE_PRIVATE);
+        no_anggota = sharedpreferences.getString("no_anggota", null);
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
         pDialog = new ProgressDialog(MainActivity.this);
         pDialog.setCancelable(false);
         pDialog.setMessage("Memuat data ....");
         pDialog.show();
-        getMenuList();
+        getMenuList(no_anggota);
         txt_logout=findViewById(R.id.txt_logout);
-        sharedpreferences = getSharedPreferences("siskopsya", Context.MODE_PRIVATE);
-        no_anggota = sharedpreferences.getString("no_anggota", null);
+
         txt_logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -73,8 +74,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-    private void getMenuList(){
-        String url_provinsi="https://yayasansehatmadanielarbah.com/api-siskopsya/menulist.php?auth=c2lza29wc3lhOnNpc2tvcHN5YTEyMw==&&no_anggota="+no_anggota;
+    private void getMenuList(String no_anggotae){
+        String url_provinsi="https://yayasansehatmadanielarbah.com/api-siskopsya/menulist.php?auth=c2lza29wc3lhOnNpc2tvcHN5YTEyMw==&&no_anggota="+no_anggotae;
         RequestQueue requestQueue= Volley.newRequestQueue(this);
         Log.wtf("URL Called", url_provinsi + "");
         judulList = new ArrayList<>();
