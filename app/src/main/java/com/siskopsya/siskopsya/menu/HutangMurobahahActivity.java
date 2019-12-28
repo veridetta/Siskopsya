@@ -6,11 +6,15 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,6 +26,7 @@ import com.android.volley.RetryPolicy;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.dev.materialspinner.MaterialSpinner;
 import com.siskopsya.siskopsya.MainActivity;
 import com.siskopsya.siskopsya.R;
 import com.siskopsya.siskopsya.adapter.SaldoAdapter;
@@ -35,113 +40,126 @@ import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
 
 public class HutangMurobahahActivity extends AppCompatActivity {
-    private ArrayList<String> kodeSaldoList, saldoList, tglAkadList, tenorList,
-            pinjamanList, bayarList, sisaList;
+    private ArrayList<String> noAkadList;
     //Dialog dialog;
     ProgressDialog pDialog;
     //TextView totalD, totalR, tidak;
-    String txtTotalSaldo, txtKodeSaldo, txtSaldo, txtTglAkad, txtTenor,
-            txtPinjaman, txtBayar, txtSisa;
-    TextView totalSaldo;
-    LinearLayout lyNoData;
+    String tNoAnggota, tNamaAnggota, tTgLGabung, tTotalSaldo, tNoAkad,
+            tTotalAngsuran, tAngsuranDibayar, tSisaAngsuran, no_anggota;
+    TextView noAnggota, namaAnggota, tglGabung, totalSaldo,
+            totalAngsuran, angsuranDibayar, sisaAngsuran;
+    MaterialSpinner spnoAkad;
+    LinearLayout lyNoData, lyData;
     SharedPreferences sharedpreferences;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_hutang_murobahah);
-        lyNoData = findViewById(R.id.ly_no_data);
+        sharedpreferences = getSharedPreferences("siskopsya", Context.MODE_PRIVATE);
+        no_anggota = sharedpreferences.getString("no_anggota", null);
+        lyData = findViewById(R.id.ly_deskripsi);
+        noAnggota = findViewById(R.id.no_anggota);
+        namaAnggota = findViewById(R.id.nama_anggota);
+        tglGabung = findViewById(R.id.tgl_gabung);
+        totalSaldo = findViewById(R.id.total_saldo);
+        totalAngsuran = findViewById(R.id.total_angsuran);
+        angsuranDibayar = findViewById(R.id.angsuran_dibayar);
+        sisaAngsuran = findViewById(R.id.sisa_angsuran);
         assert getSupportActionBar() != null;   //null check
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);   //show back button
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setTitle("Tabungan");
+        actionBar.setTitle("Tagihan Murobahah");
         pDialog = new ProgressDialog(HutangMurobahahActivity.this);
         pDialog.setCancelable(false);
         pDialog.setMessage("Memuat data ....");
         pDialog.show();
         getSaldoList();
+        spnoAkad = findViewById(R.id.no_akad);
+        spnoAkad.setError("Please select No Akad");
+        spnoAkad.setLabel("Country");
+        spnoAkad.getSpinner().setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Toast.makeText(HutangMurobahahActivity.this, "Silahkan"+position, Toast.LENGTH_LONG).show();
+            }
+        });
     }
     @Override
     public boolean onSupportNavigateUp(){
         finish();
         return true;
     }
-    private void getSaldoList() {
-        String url_provinsi = "https://yayasansehatmadanielarbah.com/api-siskopsya/saldo.php?auth=c2lza29wc3lhOnNpc2tvcHN5YTEyMw==&&no_anggota=001&&tipe=tabungan";
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
-        Log.wtf("URL Called", url_provinsi + "");
-        kodeSaldoList = new ArrayList<>();
-        saldoList = new ArrayList<>();
-        tglAkadList = new ArrayList<>();
-        tenorList = new ArrayList<>();
-        pinjamanList = new ArrayList<>();
-        bayarList = new ArrayList<>();
-        sisaList = new ArrayList<>();
-
-        StringRequest stringRequest = new StringRequest(Request.Method.GET,
-                url_provinsi, new Response.Listener<String>() {
+    private void getSaldoList(){
+        String urll ="https://yayasansehatmadanielarbah.com/api-siskopsya/saldo/murobahah.php?auth=c2lza29wc3lhOnNpc2tvcHN5YTEyMw==&&no_anggota="+no_anggota;
+        RequestQueue requestQueue= Volley.newRequestQueue(this);
+        Log.wtf("URL Called", urll + "");
+        noAkadList = new ArrayList<>();
+        StringRequest stringRequest=new StringRequest(Request.Method.GET,
+                urll, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 Log.e(MainActivity.class.getSimpleName(), "Auth Response: " + response);
-                try {
-                    JSONObject jsonObject = new JSONObject(response);
+                try{
+                    JSONObject jsonObject=new JSONObject(response);
                     JSONArray jArray = jsonObject.getJSONArray("content");
                     JSONArray jTotal = jsonObject.getJSONArray("total");
-                    //totalD.setText(txtTotalD);
-                    txtTotalSaldo = jsonObject.getString("total_saldo");
-                    RecyclerView menuView = (RecyclerView) findViewById(R.id.sado_list);
-                    if (txtTotalSaldo.equals("no data")) {
+                    JSONArray jNoAkad = jsonObject.getJSONArray("no_akad");
+                    if(jsonObject.getString("data").equals("no data")){
                         lyNoData.setVisibility(View.VISIBLE);
-                        menuView.setVisibility(View.GONE);
-                    } else {
-                        for (int i = 0; i < jArray.length(); i++) {
-                            JSONObject jsonObject1 = jArray.getJSONObject(i);
-                            txtKodeSaldo = jsonObject1.getString("kodeSaldo");
-                            txtSaldo = jsonObject1.getString("saldo");
-                            txtTglAkad = jsonObject1.getString("tglAkad");
-                            txtTenor = jsonObject1.getString("tenor");
-                            txtPinjaman = jsonObject1.getString("pinjaman");
-                            txtBayar = jsonObject1.getString("bayar");
-                            txtSisa = jsonObject1.getString("sisa");
-                            kodeSaldoList.add(txtKodeSaldo);
-                            saldoList.add(txtSaldo);
-                            tglAkadList.add(txtTglAkad);
-                            tenorList.add(txtTenor);
-                            pinjamanList.add(txtPinjaman);
-                            bayarList.add(txtBayar);
-                            sisaList.add(txtSisa);
+                        lyData.setVisibility(View.GONE);
+                        if(pDialog.isShowing()){
+                            pDialog.dismiss();
                         }
-                        for (int m = 0; m < jTotal.length(); m++) {
+                    }else{
+                        for(int a=0;a<jNoAkad.length();a++){
+                            JSONObject oNoAkad=jNoAkad.getJSONObject(a);
+                            tNoAkad = oNoAkad.getString("no_akad");
+                            noAkadList.add(tNoAkad);
+                        }
+                        for(int i=0;i<jArray.length();i++){
+                            JSONObject jsonObject1=jArray.getJSONObject(i);
+                            tNoAnggota =jsonObject1.getString("no_anggota");
+                            tNamaAnggota =jsonObject1.getString("nama_anggota");
+                            tTgLGabung= jsonObject1.getString("tgl_gabung");
+                            tTotalSaldo = jsonObject1.getString("total_saldo");
+                        }
+                        for(int m=0;m<jTotal.length();m++) {
                             JSONObject getTotal = jTotal.getJSONObject(m);
                             //txtTotalD = getTotal.getString("total_diagnosa");
                         }
                         lyNoData.setVisibility(View.GONE);
-                        SaldoAdapter menuData = new SaldoAdapter(kodeSaldoList, saldoList,
-                                tglAkadList, tenorList, pinjamanList, bayarList, sisaList, HutangMurobahahActivity.this);
-                        RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(HutangMurobahahActivity.this, 1);
-                        menuView.setLayoutManager(mLayoutManager);
-                        menuView.setAdapter(menuData);
+                        lyData.setVisibility(View.VISIBLE);
+                        //totalD.setText(txtTotalD);
                         //format harga
                         DecimalFormatSymbols symbols = new DecimalFormatSymbols();
                         symbols.setGroupingSeparator('.');
                         symbols.setDecimalSeparator(',');
                         DecimalFormat decimalFormat = new DecimalFormat("Rp #,###", symbols);
                         //inisial format rupiah
-                        String RpTotalSaldo = decimalFormat.format(Integer.parseInt(txtTotalSaldo));
+                        String RpTotalSaldo = decimalFormat.format(Integer.parseInt(tTotalSaldo));
+                        noAnggota.setText(tNoAnggota);
+                        namaAnggota.setText(tNamaAnggota);
+                        tglGabung.setText(tTgLGabung);
                         totalSaldo.setText(RpTotalSaldo);
+                        // Creating adapter for spinner
+                        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(HutangMurobahahActivity.this, android.R.layout.simple_spinner_item, noAkadList);
+                        // Drop down layout style - list view with radio button
+                        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                        // attaching data adapter to spinner
+                        spnoAkad.setAdapter(dataAdapter);
+                        if(pDialog.isShowing()){
+                            pDialog.dismiss();
+                        }
                     }
-                    if (pDialog.isShowing()) {
-                        pDialog.dismiss();
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+
+                }catch (JSONException e){e.printStackTrace(); }
 
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 error.printStackTrace();
-                if (pDialog.isShowing()) {
+                if(pDialog.isShowing()){
                     pDialog.dismiss();
                 }
                 Toast.makeText(HutangMurobahahActivity.this, "Silahkan coba lagi", Toast.LENGTH_LONG).show();
@@ -152,5 +170,6 @@ public class HutangMurobahahActivity extends AppCompatActivity {
         RetryPolicy policy = new DefaultRetryPolicy(socketTimeout, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
         stringRequest.setRetryPolicy(policy);
         requestQueue.add(stringRequest);
+
     }
 }
