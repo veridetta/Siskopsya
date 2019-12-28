@@ -8,7 +8,7 @@ android {
     }
     defaultConfig {
         applicationId "com.siskopsya.siskopsya"
-        minSdkVersion 19
+        minSdkVersion 16
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
@@ -47,6 +47,6 @@ dependencies {
     //circle image
     implementation 'de.hdodenhof:circleimageview:2.1.0'
     //custom spinner
-    implementation'com.github.devdhar04:MaterialSpinner:v0.1.2'
+    //implementation'com.github.devdhar04:MaterialSpinner:v0.1.2'
 
 }

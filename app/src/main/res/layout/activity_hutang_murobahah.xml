@@ -178,11 +178,11 @@
                                             android:layout_height="wrap_content"
                                             android:text="No. Akad"
                                             android:textSize="@dimen/_13sdp"/>
-                                        <com.dev.materialspinner.MaterialSpinner
+                                        <Spinner
                                             android:id="@+id/no_akad"
                                             android:layout_width="1dp"
                                             android:layout_weight="5"
-                                            android:layout_height="wrap_content"/>
+                                            android:layout_height="@dimen/_30sdp" />
                                     </LinearLayout>
                                 </LinearLayout>
                             </LinearLayout>

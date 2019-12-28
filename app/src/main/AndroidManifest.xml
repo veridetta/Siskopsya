@@ -28,8 +28,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity" />
-        <activity android:name=".LoginActivity" />
+        <activity android:name=".MainActivity"
+            android:configChanges="orientation|screenSize"/>
+        <activity android:name=".LoginActivity"
+            android:configChanges="orientation|screenSize"/>
     </application>
 
 </manifest>
