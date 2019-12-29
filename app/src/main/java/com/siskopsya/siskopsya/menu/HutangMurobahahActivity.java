@@ -247,7 +247,7 @@ public class HutangMurobahahActivity extends AppCompatActivity {
                         symbolsz.setDecimalSeparator(',');
                         DecimalFormat decimalFormat = new DecimalFormat("Rp #,###", symbolsz);
                         //inisial format rupiah
-                        String rpTotalAngsuran = decimalFormat.format(Integer.parseInt(tTotalSaldo));
+                        String rpTotalAngsuran = decimalFormat.format(Integer.parseInt(tTotalAngsuran));
                         String rpAngsuranDibayar=decimalFormat.format(Integer.parseInt(tAngsuranDibayar));
                         String rpSisaAngsuran = decimalFormat.format(Integer.parseInt(tSisaAngsuran));
                         totalAngsuran.setText(rpTotalAngsuran);
