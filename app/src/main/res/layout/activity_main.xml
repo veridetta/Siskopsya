@@ -83,7 +83,7 @@
                 <ImageView
                     android:layout_width="@dimen/_20sdp"
                     android:layout_height="@dimen/_20sdp"
-                    android:background="@drawable/icon"/>
+                    android:background="@drawable/lock"/>
             </LinearLayout>
         </LinearLayout>
     </RelativeLayout>

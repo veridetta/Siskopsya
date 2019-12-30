@@ -41,9 +41,9 @@ public class MainActivity extends AppCompatActivity {
     //Dialog dialog;
     ProgressDialog pDialog;
     //TextView totalD, totalR, tidak;
-    String txtJudul, txtSaldo, txtGambar, no_anggota;
+    String txtJudul, txtSaldo, txtGambar, no_anggota, nama_lengkap;
     boolean doubleBackToExitPressedOnce = false;
-    TextView txt_logout;
+    TextView txt_logout, nama;
     SharedPreferences sharedpreferences;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +51,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         sharedpreferences = getSharedPreferences("siskopsya", Context.MODE_PRIVATE);
         no_anggota = sharedpreferences.getString("no_anggota", null);
+        nama_lengkap= sharedpreferences.getString("nama_lengkap", null);
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
         pDialog = new ProgressDialog(MainActivity.this);
@@ -59,7 +60,8 @@ public class MainActivity extends AppCompatActivity {
         pDialog.show();
         getMenuList(no_anggota);
         txt_logout=findViewById(R.id.txt_logout);
-
+        nama = findViewById(R.id.txt_nama);
+        nama.setText("Hai "+nama_lengkap);
         txt_logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -24,12 +24,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="@dimen/_5sdp"
+                android:background="@color/grey_200"
                 android:orientation="horizontal">
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/img_samping"
                     android:layout_width="@dimen/_40sdp"
-                    android:layout_height="@dimen/_40sdp"
-                    android:background="@drawable/icon"/>
+                    android:background="@color/grey_200"
+                    android:layout_height="@dimen/_40sdp" />
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"

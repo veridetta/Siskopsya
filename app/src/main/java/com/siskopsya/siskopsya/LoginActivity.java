@@ -117,6 +117,7 @@ public class LoginActivity extends AppCompatActivity {
                     JSONObject jObj = new JSONObject(response);
                     success = jObj.getInt("success");
                     String no_anggota = jObj.getString("no_anggota");
+                    String nama_lengkap = jObj.getString("nama_lengkap");
                     // Check for error node in json
                     if (success == 1) {
                         Log.e("Successfully Login!", jObj.toString());
@@ -124,6 +125,7 @@ public class LoginActivity extends AppCompatActivity {
                         SharedPreferences.Editor editor = sharedpreferences.edit();
                         editor.putBoolean("session_status", true);
                         editor.putString("no_anggota", no_anggota);
+                        editor.putString("nama_lengkap", nama_lengkap);
                         editor.commit();
                         Toast.makeText(getApplicationContext(),
                                 "Selamat datang ", Toast.LENGTH_LONG).show();
