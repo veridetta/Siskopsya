@@ -71,6 +71,7 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(),
                         "Berhasil Logout ", Toast.LENGTH_LONG).show();
                 Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                intent.putExtra("CEK_LOGIN", "baru");
                 finish();
                 startActivity(intent);
             }

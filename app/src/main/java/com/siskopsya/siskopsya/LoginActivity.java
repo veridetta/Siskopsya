@@ -42,7 +42,7 @@ public class LoginActivity extends AppCompatActivity {
     private static final String TAG = LoginActivity.class.getSimpleName();
     SharedPreferences sharedpreferences;
     Boolean session = false;
-    String string_email, string_id;
+    String string_email, string_id, no_token;
     boolean doubleBackToExitPressedOnce = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +53,14 @@ public class LoginActivity extends AppCompatActivity {
         btn_login = findViewById(R.id.btn_login);
         edit_email = findViewById(R.id.email_input);
         edit_password = findViewById(R.id.password_input);
+        Bundle cek_data = getIntent().getExtras();
+        String cek_login = cek_data.getString("CEK_LOGIN");
+        if(cek_login.equals("baru")){
+            Intent belumLogin = new Intent(LoginActivity.this, Launch.class);
+            Toast.makeText(LoginActivity.this, "Harap Login Dahulu!",
+                    Toast.LENGTH_LONG).show();
+            startActivity(belumLogin);
+        }
         //---------- CEK KONEKSI ------------
         conMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         {
@@ -72,6 +80,7 @@ public class LoginActivity extends AppCompatActivity {
         session = sharedpreferences.getBoolean("session_status", false);
         string_id = sharedpreferences.getString("id", null);
         string_email = sharedpreferences.getString("username", null);
+        no_token= sharedpreferences.getString("token", null);
         if (session) {
             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
             intent.putExtra("id", string_id);
@@ -118,6 +127,7 @@ public class LoginActivity extends AppCompatActivity {
                     success = jObj.getInt("success");
                     String no_anggota = jObj.getString("no_anggota");
                     String nama_lengkap = jObj.getString("nama_lengkap");
+                    String kode_login =jObj.getString("kode_login");
                     // Check for error node in json
                     if (success == 1) {
                         Log.e("Successfully Login!", jObj.toString());
@@ -126,6 +136,7 @@ public class LoginActivity extends AppCompatActivity {
                         editor.putBoolean("session_status", true);
                         editor.putString("no_anggota", no_anggota);
                         editor.putString("nama_lengkap", nama_lengkap);
+                        editor.putString("kode_login", kode_login);
                         editor.commit();
                         Toast.makeText(getApplicationContext(),
                                 "Selamat datang ", Toast.LENGTH_LONG).show();
@@ -163,6 +174,7 @@ public class LoginActivity extends AppCompatActivity {
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("email", email);
                 params.put("password", password);
+                params.put("no_token", no_token);
                 return params;
             }
 

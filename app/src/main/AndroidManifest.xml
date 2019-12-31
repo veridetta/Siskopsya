@@ -15,7 +15,17 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".menu.SHUActivity"></activity>
+        <service android:name=".services.MyFirebaseInstanceIdService">
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
+            </intent-filter>
+        </service>
+        <service android:name=".services.MyFirebaseMessagingService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+        <activity android:name=".menu.SHUActivity" />
         <activity android:name=".menu.InvestasiActivity" />
         <activity android:name=".menu.HutangQordhulhasanActivity" />
         <activity android:name=".menu.HutangMurobahahActivity" />
@@ -28,10 +38,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity"
-            android:configChanges="orientation|screenSize"/>
-        <activity android:name=".LoginActivity"
-            android:configChanges="orientation|screenSize"/>
+        <activity
+            android:name=".MainActivity"
+            android:configChanges="orientation|screenSize" />
+        <activity
+            android:name=".LoginActivity"
+            android:configChanges="orientation|screenSize" />
     </application>
 
 </manifest>
