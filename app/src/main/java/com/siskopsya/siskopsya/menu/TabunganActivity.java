@@ -46,7 +46,8 @@ import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
 
 public class TabunganActivity extends AppCompatActivity {
-    private ArrayList<String> jenisList, kodeList;
+    private ArrayList<String> jenisList, totalSaldoList,
+            debitList, kreditList, saldoList;
     //Dialog dialog;
     ProgressDialog pDialog, pDialog2;
     //TextView totalD, totalR, tidak;
@@ -54,7 +55,7 @@ public class TabunganActivity extends AppCompatActivity {
             tJenis, tDebit, tKredit, tSaldo, tKode;
     TextView noAnggota, namaAnggota, tglGabung, totalSaldo,
             debit, kredit, saldo;
-    Spinner spnJenis;
+    String txtJenis, txtTotalSaldo, txtDebit, txtKredit, txtSaldo;
     LinearLayout lyNoData, lyData;
     SharedPreferences sharedpreferences;
     @Override
@@ -81,27 +82,7 @@ public class TabunganActivity extends AppCompatActivity {
         pDialog.setMessage("Memuat data ....");
         pDialog.show();
         getakadList();
-        spnJenis = findViewById(R.id.jenis_tabungan);
-        spnJenis.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                //Toast.makeText(HutangMurobahahActivity.this, "Silahkan"+position, Toast.LENGTH_LONG).show();
-                if(position>0){
-                    String jenis = kodeList.get(position).toString();
-                    String fixJenis = jenis.replace("/","kk2019");
-                    pDialog2 = new ProgressDialog(TabunganActivity.this);
-                    pDialog2.setCancelable(false);
-                    pDialog2.setMessage("Memuat data ....");
-                    pDialog2.show();
-                    getSaldoList(fixJenis);
-                }
-            }
 
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
     }
     @Override
     public boolean onSupportNavigateUp(){
@@ -113,9 +94,11 @@ public class TabunganActivity extends AppCompatActivity {
         RequestQueue requestQueue= Volley.newRequestQueue(this);
         Log.wtf("URL Called", urll + "");
         jenisList = new ArrayList<>();
-        kodeList = new ArrayList<>();
-        jenisList.add("Pilih Jenis Tabungan");
-        kodeList.add("Pilh Kode Tabungan");
+        totalSaldoList =  new ArrayList<>();
+        debitList = new ArrayList<>();
+        kreditList = new ArrayList<>();
+        saldoList = new ArrayList<>();
+
         StringRequest stringRequest=new StringRequest(Request.Method.GET,
                 urll, new Response.Listener<String>() {
             @Override
@@ -125,7 +108,8 @@ public class TabunganActivity extends AppCompatActivity {
                     JSONObject jsonObject=new JSONObject(response);
                     JSONArray jArray = jsonObject.getJSONArray("content");
                     JSONArray jTotal = jsonObject.getJSONArray("total");
-                    JSONArray jNoAkad = jsonObject.getJSONArray("jenis_tabungan");
+                    JSONArray jNoAkad = jsonObject.getJSONArray("no_rek");
+                    RecyclerView menuView = (RecyclerView) findViewById(R.id.tabungan_list);
                     if(jsonObject.getString("data").equals("no data")){
                         //lyNoData.setVisibility(View.VISIBLE);
                         //lyData.setVisibility(View.GONE);
@@ -135,10 +119,17 @@ public class TabunganActivity extends AppCompatActivity {
                     }else{
                         for(int a=0;a<jNoAkad.length();a++){
                             JSONObject oNoAkad=jNoAkad.getJSONObject(a);
-                            tJenis = oNoAkad.getString("jenis_tabungan");
-                            tKode = oNoAkad.getString("kode_simpanan");
+                            tJenis = oNoAkad.getString("rekening");
+                            txtSaldo = oNoAkad.getString("saldo");
+                            txtDebit=oNoAkad.getString("debit");
+                            txtKredit=oNoAkad.getString("kredit");
+                            //tKode = oNoAkad.getString("kode_simpanan");
                             jenisList.add(tJenis);
-                            kodeList.add(tKode);
+                            debitList.add(txtDebit);
+                            kreditList.add(txtKredit);
+                            saldoList.add(txtSaldo);
+                            totalSaldoList.add(txtSaldo);
+
                         }
                         for(int i=0;i<jArray.length();i++){
                             JSONObject jsonObject1=jArray.getJSONObject(i);
@@ -147,9 +138,16 @@ public class TabunganActivity extends AppCompatActivity {
                             tTgLGabung= jsonObject1.getString("tgl_gabung");
                         }
                         tTotalSaldo = jsonObject.getString("total_saldo");
+                        lyNoData.setVisibility(View.GONE);
+                        menuView.setVisibility(View.VISIBLE);
                         //lyNoData.setVisibility(View.GONE);
                         //lyData.setVisibility(View.VISIBLE);
                         //totalD.setText(txtTotalD);
+                        TabunganAdapter menuData = new TabunganAdapter( jenisList, totalSaldoList,
+                                debitList, kreditList, saldoList, TabunganActivity.this);
+                        RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(TabunganActivity.this,1);
+                        menuView.setLayoutManager(mLayoutManager);
+                        menuView.setAdapter(menuData);
                         //format harga
                         DecimalFormatSymbols symbols = new DecimalFormatSymbols();
                         symbols.setGroupingSeparator('.');
@@ -196,8 +194,7 @@ public class TabunganActivity extends AppCompatActivity {
                                 return view;
                             }
                         };
-                        // attaching data adapter to spinner
-                        spnJenis.setAdapter(spinnerArrayAdapter);
+
                         if(pDialog.isShowing()){
                             pDialog.dismiss();
                         }

@@ -93,27 +93,27 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.MyViewHolder> 
             public void onClick(View v) {
                 String target = judulList.get(position).toString();
                 switch (target){
-                    case "simpanan":
+                    case "Simpanan":
                         Intent p = new Intent(v.getContext()
                                 , SimpananActivity.class);
                         v.getContext().startActivity(p);
                         break;
-                    case "tabungan":
+                    case "Tabungan":
                         Intent q = new Intent(v.getContext()
                                 , TabunganActivity.class);
                         v.getContext().startActivity(q);
                         break;
-                    case "hutang murobahah":
+                    case "Hutang Murobahah":
                         Intent r = new Intent(v.getContext()
                                 , HutangMurobahahActivity.class);
                         v.getContext().startActivity(r);
                         break;
-                    case "hutang qordhulhasan":
+                    case "Hutang Qordhulhasan":
                         Intent s = new Intent(v.getContext()
                                 , HutangQordhulhasanActivity.class);
                         v.getContext().startActivity(s);
                         break;
-                    case "investasi":
+                    case "Investasi":
                         Intent t = new Intent(v.getContext()
                                 , InvestasiActivity.class);
                         v.getContext().startActivity(t);

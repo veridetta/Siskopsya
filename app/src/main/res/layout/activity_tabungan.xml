@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/grey_200"
+    android:background="@color/grey_300"
     tools:context=".menu.TabunganActivity">
     <RelativeLayout
         android:layout_width="match_parent"
@@ -164,24 +164,6 @@
                                             android:textColor="@color/grey_700"
                                             android:textSize="@dimen/_20sdp"/>
                                     </LinearLayout>
-                                    <LinearLayout
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:padding="@dimen/_8sdp"
-                                        android:orientation="vertical">
-                                        <TextView
-                                            android:layout_width="match_parent"
-                                            android:layout_gravity="center_vertical"
-                                            android:gravity="center_vertical"
-                                            android:layout_height="wrap_content"
-                                            android:text="Jenis Tabungan"
-                                            android:layout_marginBottom="@dimen/_4sdp"
-                                            android:textSize="@dimen/_13sdp"/>
-                                        <Spinner
-                                            android:id="@+id/jenis_tabungan"
-                                            android:layout_width="match_parent"
-                                            android:layout_height="@dimen/_30sdp" />
-                                    </LinearLayout>
                                 </LinearLayout>
                             </LinearLayout>
                         </RelativeLayout>
@@ -219,132 +201,15 @@
                             </LinearLayout>
                         </RelativeLayout>
                     </RelativeLayout>
-                    <LinearLayout
-                        android:id="@+id/ly_deskripsi"
-                        android:visibility="gone"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:padding="@dimen/_13sdp">
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:textSize="@dimen/_13sdp"
-                            android:textStyle="bold"
-                            android:text="Rincian Tabungan"/>
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:padding="@dimen/_8sdp"
-                            android:orientation="vertical">
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:weightSum="7"
-                                android:paddingBottom="@dimen/_8sdp"
-                                android:orientation="horizontal">
-                                <LinearLayout
-                                    android:layout_width="1dp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_weight="3">
-                                    <TextView
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:textSize="@dimen/_12sdp"
-                                        android:textColor="@color/grey_800"
-                                        android:text="Debet"/>
-                                </LinearLayout>
-                                <LinearLayout
-                                    android:layout_width="1dp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_weight="4"
-                                    android:layout_gravity="end"
-                                    android:gravity="end">
-                                    <TextView
-                                        android:id="@+id/debit"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:textSize="@dimen/_12sdp"
-                                        android:textColor="@color/grey_800"
-                                        android:text="Rp. 10.000.000,00"/>
-                                </LinearLayout>
-                            </LinearLayout>
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:weightSum="7"
-                                android:paddingBottom="@dimen/_8sdp"
-                                android:orientation="horizontal">
-                                <LinearLayout
-                                    android:layout_width="1dp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_weight="3">
-                                    <TextView
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:textSize="@dimen/_12sdp"
-                                        android:textColor="@color/red_600"
-                                        android:text="Credit"/>
-                                </LinearLayout>
-                                <LinearLayout
-                                    android:layout_width="1dp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_weight="4"
-                                    android:layout_gravity="end"
-                                    android:gravity="end">
-                                    <TextView
-                                        android:id="@+id/kredit"
-                                        android:textColor="@color/red_400"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:textSize="@dimen/_12sdp"
-                                        android:text="Rp. 5.000.000,00"/>
-                                </LinearLayout>
-                            </LinearLayout>
-                            <View
-                                android:layout_width="match_parent"
-                                android:layout_height="@dimen/_1sdp"
-                                android:background="@color/grey_400"
-                                android:layout_marginBottom="@dimen/_5sdp"/>
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:weightSum="7"
-                                android:paddingBottom="@dimen/_8sdp"
-                                android:orientation="horizontal">
-                                <LinearLayout
-                                    android:layout_width="1dp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_weight="3">
-                                    <TextView
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:textSize="@dimen/_12sdp"
-                                        android:textColor="@color/green_800"
-                                        android:text="Saldo"/>
-                                </LinearLayout>
-                                <LinearLayout
-                                    android:layout_width="1dp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_weight="4"
-                                    android:layout_gravity="end"
-                                    android:gravity="end">
-                                    <TextView
-                                        android:id="@+id/saldo"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:textSize="@dimen/_12sdp"
-                                        android:textColor="@color/green_800"
-                                        android:text="Rp. 5.000.000,00"/>
-                                </LinearLayout>
-                            </LinearLayout>
-                        </LinearLayout>
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/_1sdp"
-                            android:background="@color/teal_300"/>
-                    </LinearLayout>
+
                 </LinearLayout>
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/tabungan_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone">
+
+                </androidx.recyclerview.widget.RecyclerView>
                 <LinearLayout
                     android:id="@+id/ly_no_data"
                     android:layout_width="match_parent"

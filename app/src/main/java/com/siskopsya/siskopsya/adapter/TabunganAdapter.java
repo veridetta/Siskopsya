@@ -56,8 +56,8 @@ public class TabunganAdapter extends RecyclerView.Adapter<TabunganAdapter.MyView
 
         public MyViewHolder(View view) {
             super(view);
-            txtJenis = (TextView) view.findViewById(R.id.kode);
-            txtTotalSaldo = view.findViewById(R.id.total_saldo);
+            txtJenis = (TextView) view.findViewById(R.id.no_rek);
+            txtTotalSaldo = view.findViewById(R.id.saldo_rek);
             txtDebit = (TextView) view.findViewById(R.id.debit);
             txtKredit = (TextView) view.findViewById(R.id.kredit);
             txtSaldo = (TextView) view.findViewById(R.id.saldo);
@@ -89,7 +89,7 @@ public class TabunganAdapter extends RecyclerView.Adapter<TabunganAdapter.MyView
         String saldo = decimalFormat.format(Integer.parseInt(saldoList.get(position)));
 
         //set data ke view
-        holder.txtJenis.setText(jenisList.get(position));
+        holder.txtJenis.setText("No Rek. "+jenisList.get(position));
         holder.txtTotalSaldo.setText(totalSaldo);
         holder.txtDebit.setText(debit);
         holder.txtKredit.setText(kredit);
