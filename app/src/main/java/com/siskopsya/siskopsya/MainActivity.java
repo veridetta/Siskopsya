@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
     //Dialog dialog;
     ProgressDialog pDialog;
     //TextView totalD, totalR, tidak;
-    String txtJudul, txtSaldo, txtGambar, no_anggota, nama_lengkap;
+    String txtJudul, txtSaldo, txtGambar, no_anggota, nama_lengkap, db;
     boolean doubleBackToExitPressedOnce = false;
     TextView txt_logout, nama;
     SharedPreferences sharedpreferences;
@@ -52,6 +52,7 @@ public class MainActivity extends AppCompatActivity {
         sharedpreferences = getSharedPreferences("siskopsya", Context.MODE_PRIVATE);
         no_anggota = sharedpreferences.getString("no_anggota", null);
         nama_lengkap= sharedpreferences.getString("nama_lengkap", null);
+        db=sharedpreferences.getString("db", null);
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
         pDialog = new ProgressDialog(MainActivity.this);
@@ -78,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
     private void getMenuList(String no_anggotae){
-        String url_provinsi="https://yayasansehatmadanielarbah.com/api-siskopsya/menulist.php?auth=c2lza29wc3lhOnNpc2tvcHN5YTEyMw==&&no_anggota="+no_anggotae;
+        String url_provinsi="https://yayasansehatmadanielarbah.com/api-siskopsya/menulist.php?auth=c2lza29wc3lhOnNpc2tvcHN5YTEyMw==&&no_anggota="+no_anggotae+"&&db="+db;
         RequestQueue requestQueue= Volley.newRequestQueue(this);
         Log.wtf("URL Called", url_provinsi + "");
         judulList = new ArrayList<>();

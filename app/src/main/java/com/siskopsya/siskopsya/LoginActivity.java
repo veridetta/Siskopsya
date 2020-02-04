@@ -42,7 +42,7 @@ public class LoginActivity extends AppCompatActivity {
     private static final String TAG = LoginActivity.class.getSimpleName();
     SharedPreferences sharedpreferences;
     Boolean session = false;
-    String string_email, string_id, no_token;
+    String string_email, string_id, no_token,db;
     boolean doubleBackToExitPressedOnce = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -128,6 +128,7 @@ public class LoginActivity extends AppCompatActivity {
                     String no_anggota = jObj.getString("no_anggota");
                     String nama_lengkap = jObj.getString("nama_lengkap");
                     String kode_login =jObj.getString("kode_login");
+                    String db =jObj.getString("db");
                     // Check for error node in json
                     if (success == 1) {
                         Log.e("Successfully Login!", jObj.toString());
@@ -137,6 +138,7 @@ public class LoginActivity extends AppCompatActivity {
                         editor.putString("no_anggota", no_anggota);
                         editor.putString("nama_lengkap", nama_lengkap);
                         editor.putString("kode_login", kode_login);
+                        editor.putString("db", "yayasan5_"+db);
                         editor.commit();
                         Toast.makeText(getApplicationContext(),
                                 "Selamat datang ", Toast.LENGTH_LONG).show();

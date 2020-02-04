@@ -45,7 +45,7 @@ public class InvestasiActivity extends AppCompatActivity {
     String tKodeProjek, tAkadaAwal, tNilaiProjek, tPorsiModal, no_anggota,
             tTahun, tBulan,
             tOmset, tBiaya, tLaba, tNisbah,
-            tOmsetSum, tBiayaSum, tLabaSum, tNisbahSum;
+            tOmsetSum, tBiayaSum, tLabaSum, tNisbahSum, db;
     TextView KodeProjek, AkadaAwal, NilaiProjek, PorsiModal,
             Omset, Biaya, Laba, Nisbah,
             OmsetSum, BiayaSum, LabaSum, NisbahSum;
@@ -59,6 +59,7 @@ public class InvestasiActivity extends AppCompatActivity {
         setContentView(R.layout.activity_investasi);
         sharedpreferences = getSharedPreferences("siskopsya", Context.MODE_PRIVATE);
         no_anggota = sharedpreferences.getString("no_anggota", null);
+        db=sharedpreferences.getString("db", null);
         KodeProjek = findViewById(R.id.code_project);
         AkadaAwal = findViewById(R.id.akad_awal);
         NilaiProjek = findViewById(R.id.nilai_project);
@@ -141,7 +142,7 @@ public class InvestasiActivity extends AppCompatActivity {
         return true;
     }
     private void getTahunList(){
-        final String urll ="https://yayasansehatmadanielarbah.com/api-siskopsya/saldo/investasi.php?auth=c2lza29wc3lhOnNpc2tvcHN5YTEyMw==&&no_anggota="+no_anggota;
+        final String urll ="https://yayasansehatmadanielarbah.com/api-siskopsya/saldo/investasi.php?auth=c2lza29wc3lhOnNpc2tvcHN5YTEyMw==&&no_anggota="+no_anggota+"&&db="+db;
         RequestQueue requestQueue= Volley.newRequestQueue(this);
         Log.wtf("URL Called", urll + "");
         tahunList = new ArrayList<>();
@@ -253,7 +254,7 @@ public class InvestasiActivity extends AppCompatActivity {
 
     }
     private void getSaldoList(String tahunStr, String bulanStr, String kodeStr, String noAng){
-        final String urlsaldo ="https://yayasansehatmadanielarbah.com/api-siskopsya/saldo/investasiSaldo.php?auth=c2lza29wc3lhOnNpc2tvcHN5YTEyMw==&&no_anggota="+no_anggota+"&&tahun="+tahunStr+"&&bulan="+bulanStr+"&&kode="+kodeStr+"&&no_anggota="+noAng;
+        final String urlsaldo ="https://yayasansehatmadanielarbah.com/api-siskopsya/saldo/investasiSaldo.php?auth=c2lza29wc3lhOnNpc2tvcHN5YTEyMw==&&no_anggota="+no_anggota+"&&tahun="+tahunStr+"&&bulan="+bulanStr+"&&kode="+kodeStr+"&&no_anggota="+noAng+"&&db="+db;
         RequestQueue requestQueue2= Volley.newRequestQueue(this);
         Log.wtf("URL Called", urlsaldo + "");
         StringRequest stringRequest2=new StringRequest(Request.Method.GET,

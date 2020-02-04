@@ -43,7 +43,7 @@ public class Launch extends AppCompatActivity {
     ProgressDialog pDialog;
     final Handler handler = new Handler();
     SharedPreferences sharedpreferences;
-    String kode_login, no_anggota, kode_login_update, no_token;
+    String kode_login, no_anggota, kode_login_update, no_token,db;
     Boolean session=false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +54,8 @@ public class Launch extends AppCompatActivity {
         sharedpreferences = getSharedPreferences("siskopsya", Context.MODE_PRIVATE);
         no_anggota = sharedpreferences.getString("no_anggota", "0");
         kode_login = sharedpreferences.getString("kode_login",null);
-
+        kode_login = sharedpreferences.getString("kode_login",null);
+        db= sharedpreferences.getString("db",null);
         session = sharedpreferences.getBoolean("session_status", false);
         pDialog = new ProgressDialog(Launch.this);
         pDialog.setCancelable(false);

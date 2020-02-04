@@ -52,7 +52,7 @@ public class TabunganActivity extends AppCompatActivity {
     ProgressDialog pDialog, pDialog2;
     //TextView totalD, totalR, tidak;
     String tNoAnggota, tNamaAnggota, tTgLGabung, tTotalSaldo,no_anggota,
-            tJenis, tDebit, tKredit, tSaldo, tKode;
+            tJenis, tDebit, tKredit, tSaldo, tKode, db;
     TextView noAnggota, namaAnggota, tglGabung, totalSaldo,
             debit, kredit, saldo;
     String txtJenis, txtTotalSaldo, txtDebit, txtKredit, txtSaldo;
@@ -64,6 +64,7 @@ public class TabunganActivity extends AppCompatActivity {
         setContentView(R.layout.activity_tabungan);
         sharedpreferences = getSharedPreferences("siskopsya", Context.MODE_PRIVATE);
         no_anggota = sharedpreferences.getString("no_anggota", null);
+        db=sharedpreferences.getString("db", null);
         lyNoData = findViewById(R.id.ly_no_data);
         lyData = findViewById(R.id.ly_deskripsi);
         noAnggota = findViewById(R.id.no_anggota);
@@ -90,7 +91,7 @@ public class TabunganActivity extends AppCompatActivity {
         return true;
     }
     private void getakadList(){
-        final String urll ="https://yayasansehatmadanielarbah.com/api-siskopsya/saldo/tabungan.php?auth=c2lza29wc3lhOnNpc2tvcHN5YTEyMw==&&no_anggota="+no_anggota;
+        final String urll ="https://yayasansehatmadanielarbah.com/api-siskopsya/saldo/tabungan.php?auth=c2lza29wc3lhOnNpc2tvcHN5YTEyMw==&&no_anggota="+no_anggota+"&&db="+db;
         RequestQueue requestQueue= Volley.newRequestQueue(this);
         Log.wtf("URL Called", urll + "");
         jenisList = new ArrayList<>();

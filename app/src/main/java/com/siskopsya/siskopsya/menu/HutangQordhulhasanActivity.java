@@ -35,7 +35,7 @@ public class HutangQordhulhasanActivity extends AppCompatActivity {
     ProgressDialog pDialog;
     //TextView totalD, totalR, tidak;
     String tNoAnggota, tNamaAnggota, tTgLGabung, tTotalSaldo, no_anggota,
-            tSudahDibayar, tPembayaranSisa;
+            tSudahDibayar, tPembayaranSisa,db;
     TextView noAnggota, namaAnggota, tglGabung, totalSaldo,
             sudahDibayar, pembayaranSisa;
     LinearLayout lyNoData, lyData;
@@ -46,6 +46,7 @@ public class HutangQordhulhasanActivity extends AppCompatActivity {
         setContentView(R.layout.activity_hutang_qordhulhasan);
         sharedpreferences = getSharedPreferences("siskopsya", Context.MODE_PRIVATE);
         no_anggota = sharedpreferences.getString("no_anggota", null);
+        db=sharedpreferences.getString("db", null);
         lyNoData= findViewById(R.id.ly_no_data);
         lyData = findViewById(R.id.ly_deskripsi);
         noAnggota = findViewById(R.id.no_anggota);
@@ -70,7 +71,7 @@ public class HutangQordhulhasanActivity extends AppCompatActivity {
         return true;
     }
     private void getSaldoList(){
-        final String urll ="https://yayasansehatmadanielarbah.com/api-siskopsya/saldo/qordhulhasan.php?auth=c2lza29wc3lhOnNpc2tvcHN5YTEyMw==&&no_anggota="+no_anggota;
+        final String urll ="https://yayasansehatmadanielarbah.com/api-siskopsya/saldo/qordhulhasan.php?auth=c2lza29wc3lhOnNpc2tvcHN5YTEyMw==&&no_anggota="+no_anggota+"&&db="+db;
         RequestQueue requestQueue= Volley.newRequestQueue(this);
         Log.wtf("URL Called", urll + "");
         StringRequest stringRequest=new StringRequest(Request.Method.GET,
