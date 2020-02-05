@@ -29,6 +29,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.siskopsya.siskopsya.adapter.MenuAdapter;
 import com.siskopsya.siskopsya.menu.TabunganActivity;
+import com.siskopsya.siskopsya.setting.SettingActivity;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -45,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
     boolean doubleBackToExitPressedOnce = false;
     TextView txt_logout, nama;
     SharedPreferences sharedpreferences;
+    LinearLayout ly_setting;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,6 +63,7 @@ public class MainActivity extends AppCompatActivity {
         pDialog.show();
         getMenuList(no_anggota);
         txt_logout=findViewById(R.id.txt_logout);
+        ly_setting=findViewById(R.id.btn_setting);
         nama = findViewById(R.id.txt_nama);
         nama.setText("Hai "+nama_lengkap);
         txt_logout.setOnClickListener(new View.OnClickListener() {
@@ -73,6 +76,15 @@ public class MainActivity extends AppCompatActivity {
                         "Berhasil Logout ", Toast.LENGTH_LONG).show();
                 Intent intent = new Intent(MainActivity.this, LoginActivity.class);
                 intent.putExtra("CEK_LOGIN", "baru");
+                finish();
+                startActivity(intent);
+            }
+        });
+
+        ly_setting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, SettingActivity.class);
                 finish();
                 startActivity(intent);
             }
