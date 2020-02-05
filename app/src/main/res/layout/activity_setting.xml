@@ -69,12 +69,13 @@
                             android:id="@+id/pass_lama_input_ly"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                            app:passwordToggleEnabled="true">
                             <com.google.android.material.textfield.TextInputEditText
                                 android:id="@+id/pass_lama"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:inputType="text"
+                                android:inputType="textPassword"
                                 android:maxLines="1"
                                 android:hint="Password Lama"/>
                         </com.google.android.material.textfield.TextInputLayout>
@@ -89,12 +90,13 @@
                             android:id="@+id/pass_baru_input_ly"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                            app:passwordToggleEnabled="true">
                             <com.google.android.material.textfield.TextInputEditText
                                 android:id="@+id/pass_baru"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:inputType="text"
+                                android:inputType="textPassword"
                                 android:maxLines="1"
                                 android:hint="Password Baru"/>
                         </com.google.android.material.textfield.TextInputLayout>
@@ -109,12 +111,13 @@
                             android:id="@+id/pass_konfir_input_ly"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                            app:passwordToggleEnabled="true">
                             <com.google.android.material.textfield.TextInputEditText
                                 android:id="@+id/konfir_baru"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:inputType="text"
+                                android:inputType="textPassword"
                                 android:maxLines="1"
                                 android:hint="Konfirmasi Password Baru"/>
                         </com.google.android.material.textfield.TextInputLayout>

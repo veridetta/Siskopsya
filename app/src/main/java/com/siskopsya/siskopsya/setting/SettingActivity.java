@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -35,7 +36,7 @@ public class SettingActivity extends AppCompatActivity {
 
     EditText pass_lama, pass_baru, konfrim_pass;
     Button btn_konfirm;
-    String no_anggota,db;
+    String no_anggota,db,pesan;
     ConnectivityManager conMgr;
     SharedPreferences sharedpreferences;
     ProgressDialog pDialog;
@@ -58,6 +59,18 @@ public class SettingActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);   //show back button
         ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle("Pengaturan Akun");
+        //---------- CEK KONEKSI ------------
+        conMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        {
+            assert conMgr != null;
+            if (conMgr.getActiveNetworkInfo() != null
+                    && conMgr.getActiveNetworkInfo().isAvailable()
+                    && conMgr.getActiveNetworkInfo().isConnected()) {
+            } else {
+                Toast.makeText(getApplicationContext(), "No Internet Connection",
+                        Toast.LENGTH_LONG).show();
+            }
+        }
         btn_konfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -67,7 +80,7 @@ public class SettingActivity extends AppCompatActivity {
                         if (conMgr.getActiveNetworkInfo() != null
                                 && conMgr.getActiveNetworkInfo().isAvailable()
                                 && conMgr.getActiveNetworkInfo().isConnected()) {
-                            //checkLogin(edit_email.getText().toString(), edit_password.getText().toString());
+                            checkLogin(no_anggota, pass_lama.getText().toString(), pass_baru.getText().toString(), db);
                         } else {
                             Toast.makeText(getApplicationContext(), "No Internet Connection", Toast.LENGTH_LONG).show();
                         }
@@ -88,7 +101,7 @@ public class SettingActivity extends AppCompatActivity {
         return true;
     }
     // ------ FUNCTION CEK LOGIN ---------------
-    private void checkLogin(final String email, final String password) {
+    private void checkLogin(final String noAnggota, final String passLama, final String passBaru, final String DB) {
         pDialog = new ProgressDialog(SettingActivity.this);
         pDialog.setCancelable(false);
         pDialog.setMessage("Mengubah Password...");
@@ -103,26 +116,30 @@ public class SettingActivity extends AppCompatActivity {
                     JSONObject jObj = new JSONObject(response);
                     success = jObj.getInt("success");
                     String no_anggota = jObj.getString("no_anggota");
-                    String nama_lengkap = jObj.getString("nama_lengkap");
-                    String kode_login =jObj.getString("kode_login");
-                    String db =jObj.getString("db");
+                    pesan = jObj.getString("message");
                     // Check for error node in json
                     if (success == 1) {
-                        Log.e("Berhasil Diganti!", jObj.toString());
+                        Log.e(pesan, jObj.toString());
                         // menyimpan login ke session
                         SharedPreferences.Editor editor = sharedpreferences.edit();
                         editor.putBoolean("session_status", false);
                         editor.commit();
                         Toast.makeText(getApplicationContext(),
-                                "Berhasil, Silahkan login ulang menggunakan password baru anda. ", Toast.LENGTH_LONG).show();
-                        Intent intent = new Intent(SettingActivity.this, LoginActivity.class);
-                        intent.putExtra("CEK_LOGIN", "baru");
-                        finish();
-                        startActivity(intent);
+                                pesan, Toast.LENGTH_LONG).show();
+
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                Intent intent = new Intent(SettingActivity.this, LoginActivity.class);
+                                intent.putExtra("CEK_LOGIN", "baru");
+                                finish();
+                                startActivity(intent);
+                            }
+                        }, 3000);
 
                     } else {
                         Toast.makeText(getApplicationContext(),
-                                jObj.getString("message"), Toast.LENGTH_LONG).show();
+                                jObj.getString(pesan), Toast.LENGTH_LONG).show();
 
                     }
                 } catch (JSONException e) {
@@ -148,9 +165,9 @@ public class SettingActivity extends AppCompatActivity {
             protected Map<String, String> getParams() {
                 // Posting parameters to login url
                 Map<String, String> params = new HashMap<String, String>();
-                params.put("no_anggota", no_anggota);
-                params.put("pass_lama", pass_lama.getText().toString());
-                params.put("pass_baru", pass_baru.getText().toString());
+                params.put("no_anggota", noAnggota);
+                params.put("pass_lama", passLama);
+                params.put("pass_baru", passBaru);
                 params.put("db", db);
                 return params;
             }
