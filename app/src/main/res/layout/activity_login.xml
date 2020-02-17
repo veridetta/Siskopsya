@@ -72,7 +72,7 @@
                             android:layout_height="wrap_content"
                             android:inputType="text"
                             android:maxLines="1"
-                            android:hint="Email"/>
+                            android:hint="No Anggota"/>
                     </com.google.android.material.textfield.TextInputLayout>
                 </LinearLayout>
                 <LinearLayout

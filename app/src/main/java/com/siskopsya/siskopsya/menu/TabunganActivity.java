@@ -109,7 +109,7 @@ public class TabunganActivity extends AppCompatActivity {
                     JSONObject jsonObject=new JSONObject(response);
                     JSONArray jArray = jsonObject.getJSONArray("content");
                     JSONArray jTotal = jsonObject.getJSONArray("total");
-                    JSONArray jNoAkad = jsonObject.getJSONArray("no_rek");
+                    JSONArray jNoAkad = jsonObject.getJSONArray("norek");
                     RecyclerView menuView = (RecyclerView) findViewById(R.id.tabungan_list);
                     if(jsonObject.getString("data").equals("no data")){
                         //lyNoData.setVisibility(View.VISIBLE);
