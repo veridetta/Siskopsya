@@ -71,7 +71,7 @@
                                             android:textSize="@dimen/_18sdp"
                                             android:layout_gravity="center"
                                             android:gravity="center"
-                                            android:text="project-xxx-"
+                                            android:text="Tidak Ada Projek"
                                             android:layout_marginBottom="@dimen/_4sdp"/>
                                     </LinearLayout>
                                 </LinearLayout>

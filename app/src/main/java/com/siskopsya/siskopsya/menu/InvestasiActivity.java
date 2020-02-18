@@ -1,22 +1,22 @@
 package com.siskopsya.siskopsya.menu;
 
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
@@ -185,6 +185,16 @@ public class InvestasiActivity extends AppCompatActivity {
                         symbols.setDecimalSeparator(',');
                         DecimalFormat decimalFormat = new DecimalFormat("Rp #,###", symbols);
                         //inisial format rupiah
+                        if(TextUtils.isEmpty(tNilaiProjek)){
+                            tNilaiProjek="0";
+                        }else{
+
+                        }
+                        if(TextUtils.isEmpty(tPorsiModal)){
+                            tPorsiModal="0";
+                        }else{
+
+                        }
                         String rpNilaiProjek = decimalFormat.format(Integer.parseInt(tNilaiProjek));
                         String rpPorsimodal = decimalFormat.format(Integer.parseInt(tPorsiModal));
                         KodeProjek.setText(tKodeProjek);
